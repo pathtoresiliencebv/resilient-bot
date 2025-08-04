@@ -1,0 +1,185 @@
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "memory-bank": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-playwright"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      }
+    },
+    "knowledge-graph-memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-knowledge-graph"
+      ]
+    },
+    "duckduckgo": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-search"
+      ]
+    },
+    "mcp-compass": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-compass"
+      ]
+    },
+    "desktop-commander": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "desktop-commander-mcp"
+      ]
+    },
+    "serena": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "serena-mcp"
+      ]
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-supabase"
+      ],
+      "env": {
+        "SUPABASE_URL": "postgresql://neondb_owner:npg_w3BGlc8LuaSt@ep-icy-dawn-ae1ikgci-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+        "SUPABASE_ANON_KEY": "npg_w3BGlc8LuaSt"
+      }
+    },
+    "digma": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "digma-mcp"
+      ]
+    },
+    "openagents": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "openagents-mcp"
+      ]
+    },
+    "continue": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "continue-mcp"
+      ]
+    },
+    "gpt-pilot": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "gpt-pilot-mcp"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "context7-mcp"
+      ]
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-firecrawl"
+      ],
+      "env": {
+        "FIRECRAWL_API_KEY": "your_firecrawl_api_key_here"
+      }
+    },
+    "browserbase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-browserbase"
+      ],
+      "env": {
+        "BROWSERBASE_API_KEY": "your_browserbase_api_key_here",
+        "BROWSERBASE_PROJECT_ID": "your_browserbase_project_id_here"
+      }
+    },
+    "magic": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "magic-mcp"
+      ]
+    },
+    "opik": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "opik-mcp"
+      ],
+      "env": {
+        "OPIK_API_KEY": "your_opik_api_key_here"
+      }
+    },
+    "figma-context": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-context-mcp"
+      ],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "your_figma_access_token_here"
+      }
+    },
+    "pandoc": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-pandoc"
+      ]
+    },
+    "excel": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "excel-mcp"
+      ]
+    }
+  }
+}

@@ -59,6 +59,7 @@ export default function SetupPage() {
   const [mistralAPIKey, setMistralAPIKey] = useState("")
   const [groqAPIKey, setGroqAPIKey] = useState("")
   const [perplexityAPIKey, setPerplexityAPIKey] = useState("")
+  const [togetherAPIKey, setTogetherAPIKey] = useState("")
   const [openrouterAPIKey, setOpenrouterAPIKey] = useState("")
 
   useEffect(() => {
@@ -132,6 +133,7 @@ export default function SetupPage() {
       mistral_api_key: mistralAPIKey,
       groq_api_key: groqAPIKey,
       perplexity_api_key: perplexityAPIKey,
+      together_api_key: togetherAPIKey,
       openrouter_api_key: openrouterAPIKey,
       use_azure_openai: useAzureOpenai,
       azure_openai_api_key: azureOpenaiAPIKey,
@@ -204,6 +206,7 @@ export default function SetupPage() {
               mistralAPIKey={mistralAPIKey}
               groqAPIKey={groqAPIKey}
               perplexityAPIKey={perplexityAPIKey}
+              togetherAPIKey={togetherAPIKey}
               useAzureOpenai={useAzureOpenai}
               onOpenaiAPIKeyChange={setOpenaiAPIKey}
               onOpenaiOrgIDChange={setOpenaiOrgID}
@@ -218,6 +221,7 @@ export default function SetupPage() {
               onMistralAPIKeyChange={setMistralAPIKey}
               onGroqAPIKeyChange={setGroqAPIKey}
               onPerplexityAPIKeyChange={setPerplexityAPIKey}
+              onTogetherAPIKeyChange={setTogetherAPIKey}
               onUseAzureOpenaiChange={setUseAzureOpenai}
               openrouterAPIKey={openrouterAPIKey}
               onOpenrouterAPIKeyChange={setOpenrouterAPIKey}

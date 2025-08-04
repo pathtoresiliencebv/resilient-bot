@@ -10,6 +10,7 @@ import { FC, HTMLAttributes } from "react"
 import { AnthropicSVG } from "../icons/anthropic-svg"
 import { GoogleSVG } from "../icons/google-svg"
 import { OpenAISVG } from "../icons/openai-svg"
+import { TogetherSVG } from "../icons/together-svg"
 
 interface ModelIconProps extends HTMLAttributes<HTMLDivElement> {
   provider: ModelProvider
@@ -97,6 +98,18 @@ export const ModelIcon: FC<ModelIconProps> = ({
           )}
           src={perplexity.src}
           alt="Mistral"
+          width={width}
+          height={height}
+        />
+      )
+    case "together":
+      return (
+        <TogetherSVG
+          className={cn(
+            "rounded-sm bg-white p-1 text-black",
+            props.className,
+            theme === "dark" ? "bg-white" : "border-DEFAULT border-black"
+          )}
           width={width}
           height={height}
         />

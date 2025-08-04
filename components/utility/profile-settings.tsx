@@ -113,6 +113,9 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
   const [perplexityAPIKey, setPerplexityAPIKey] = useState(
     profile?.perplexity_api_key || ""
   )
+  const [togetherAPIKey, setTogetherAPIKey] = useState(
+    profile?.together_api_key || ""
+  )
 
   const [openrouterAPIKey, setOpenrouterAPIKey] = useState(
     profile?.openrouter_api_key || ""
@@ -150,6 +153,7 @@ export const ProfileSettings: FC<ProfileSettingsProps> = ({}) => {
       mistral_api_key: mistralAPIKey,
       groq_api_key: groqAPIKey,
       perplexity_api_key: perplexityAPIKey,
+      together_api_key: togetherAPIKey,
       use_azure_openai: useAzureOpenai,
       azure_openai_api_key: azureOpenaiAPIKey,
       azure_openai_endpoint: azureOpenaiEndpoint,

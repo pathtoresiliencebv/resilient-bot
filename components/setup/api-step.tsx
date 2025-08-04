@@ -17,6 +17,7 @@ interface APIStepProps {
   mistralAPIKey: string
   groqAPIKey: string
   perplexityAPIKey: string
+  togetherAPIKey: string
   useAzureOpenai: boolean
   openrouterAPIKey: string
   onOpenrouterAPIKeyChange: (value: string) => void
@@ -33,6 +34,7 @@ interface APIStepProps {
   onMistralAPIKeyChange: (value: string) => void
   onGroqAPIKeyChange: (value: string) => void
   onPerplexityAPIKeyChange: (value: string) => void
+  onTogetherAPIKeyChange: (value: string) => void
   onUseAzureOpenaiChange: (value: boolean) => void
 }
 
@@ -50,6 +52,7 @@ export const APIStep: FC<APIStepProps> = ({
   mistralAPIKey,
   groqAPIKey,
   perplexityAPIKey,
+  togetherAPIKey,
   openrouterAPIKey,
   useAzureOpenai,
   onOpenaiAPIKeyChange,
@@ -65,6 +68,7 @@ export const APIStep: FC<APIStepProps> = ({
   onMistralAPIKeyChange,
   onGroqAPIKeyChange,
   onPerplexityAPIKeyChange,
+  onTogetherAPIKeyChange,
   onUseAzureOpenaiChange,
   onOpenrouterAPIKeyChange
 }) => {
@@ -226,6 +230,16 @@ export const APIStep: FC<APIStepProps> = ({
           type="password"
           value={perplexityAPIKey}
           onChange={e => onPerplexityAPIKeyChange(e.target.value)}
+        />
+      </div>
+      <div className="space-y-1">
+        <Label>Together AI API Key</Label>
+
+        <Input
+          placeholder="Together AI API Key"
+          type="password"
+          value={togetherAPIKey}
+          onChange={e => onTogetherAPIKeyChange(e.target.value)}
         />
       </div>
       <div className="space-y-1">
