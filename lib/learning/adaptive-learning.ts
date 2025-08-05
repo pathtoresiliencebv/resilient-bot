@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase/browser-client"
+import { learningDatabase } from "@/lib/database/neon-client"
 
 export interface LearningData {
   id?: string
@@ -29,14 +29,9 @@ export class AdaptiveLearningService {
     data: Omit<LearningData, "id" | "created_at" | "updated_at">
   ) {
     try {
-      const { data: result, error } = await supabase
-        .from("learning_conversations")
-        .insert(data)
-        .select()
-        .single()
-
-      if (error) throw error
-      return result
+      const result = await learningDatabase.storeConversation(data)
+      if (result.error) throw result.error
+      return result.data?.[0] || null
     } catch (error) {
       console.error("Error storing conversation:", error)
       return null
@@ -50,23 +45,17 @@ export class AdaptiveLearningService {
     quality?: number
   ) {
     try {
-      const { data, error } = await supabase
-        .from("learning_conversations")
-        .update({
-          user_feedback: feedback,
-          response_quality: quality,
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", conversationId)
-        .select()
-        .single()
-
-      if (error) throw error
+      const result = await learningDatabase.updateConversationFeedback(
+        conversationId,
+        feedback,
+        quality
+      )
+      if (result.error) throw result.error
 
       // Trigger pattern learning based on feedback
       await this.updateResponsePatterns(conversationId, feedback)
 
-      return data
+      return result.data?.[0] || null
     } catch (error) {
       console.error("Error updating feedback:", error)
       return null
@@ -80,13 +69,10 @@ export class AdaptiveLearningService {
   ) {
     try {
       // Get conversation details
-      const { data: conversation } = await supabase
-        .from("learning_conversations")
-        .select("*")
-        .eq("id", conversationId)
-        .single()
+      const result = await learningDatabase.getConversation(conversationId)
+      if (result.error || !result.data?.[0]) return
 
-      if (!conversation) return
+      const conversation = result.data[0]
 
       // Extract keywords from context and message
       const keywords = this.extractKeywords(
@@ -177,15 +163,9 @@ export class AdaptiveLearningService {
     keywords: string[]
   ): Promise<ResponsePattern | null> {
     try {
-      const { data } = await supabase
-        .from("response_patterns")
-        .select("*")
-        .contains("context_keywords", keywords)
-        .order("effectiveness_score", { ascending: false })
-        .limit(1)
-        .single()
-
-      return data
+      const result = await learningDatabase.findResponsePattern(keywords)
+      if (result.error) return null
+      return result.data?.[0] || null
     } catch {
       return null
     }
@@ -196,14 +176,9 @@ export class AdaptiveLearningService {
     pattern: Omit<ResponsePattern, "id" | "created_at" | "updated_at">
   ) {
     try {
-      const { data, error } = await supabase
-        .from("response_patterns")
-        .insert(pattern)
-        .select()
-        .single()
-
-      if (error) throw error
-      return data
+      const result = await learningDatabase.createResponsePattern(pattern)
+      if (result.error) throw result.error
+      return result.data?.[0] || null
     } catch (error) {
       console.error("Error creating response pattern:", error)
       return null
@@ -216,15 +191,9 @@ export class AdaptiveLearningService {
     updates: Partial<ResponsePattern>
   ) {
     try {
-      const { data, error } = await supabase
-        .from("response_patterns")
-        .update(updates)
-        .eq("id", id)
-        .select()
-        .single()
-
-      if (error) throw error
-      return data
+      const result = await learningDatabase.updateResponsePattern(id, updates)
+      if (result.error) throw result.error
+      return result.data?.[0] || null
     } catch (error) {
       console.error("Error updating response pattern:", error)
       return null
@@ -249,17 +218,10 @@ export class AdaptiveLearningService {
   ): Promise<ResponsePattern[]> {
     try {
       const keywords = this.extractKeywords(`${context} ${userMessage}`)
-
-      const { data, error } = await supabase
-        .from("response_patterns")
-        .select("*")
-        .overlaps("context_keywords", keywords)
-        .gt("effectiveness_score", 0) // Only positive patterns
-        .order("effectiveness_score", { ascending: false })
-        .limit(3)
-
-      if (error) throw error
-      return data || []
+      const result =
+        await learningDatabase.getAdaptiveResponseSuggestions(keywords)
+      if (result.error) throw result.error
+      return result.data || []
     } catch (error) {
       console.error("Error getting adaptive suggestions:", error)
       return []
@@ -269,34 +231,9 @@ export class AdaptiveLearningService {
   // Get learning analytics
   async getLearningAnalytics(userId: string) {
     try {
-      const { data: conversations } = await supabase
-        .from("learning_conversations")
-        .select("*")
-        .eq("user_id", userId)
-
-      const { data: patterns } = await supabase
-        .from("response_patterns")
-        .select("*")
-        .order("effectiveness_score", { ascending: false })
-
-      const totalConversations = conversations?.length || 0
-      const positiveFeedback =
-        conversations?.filter(c => c.user_feedback > 0).length || 0
-      const negativeFeedback =
-        conversations?.filter(c => c.user_feedback < 0).length || 0
-
-      const avgQuality =
-        conversations?.reduce((sum, c) => sum + (c.response_quality || 0), 0) /
-          totalConversations || 0
-
-      return {
-        totalConversations,
-        positiveFeedback,
-        negativeFeedback,
-        avgQuality,
-        learnedPatterns: patterns?.length || 0,
-        topPatterns: patterns?.slice(0, 5) || []
-      }
+      const result = await learningDatabase.getLearningAnalytics(userId)
+      if (result.error) throw result.error
+      return result.data
     } catch (error) {
       console.error("Error getting learning analytics:", error)
       return null
